@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隨機選擇器</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
+        #container { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        button { padding: 10px 20px; border: none; background-color: #007BFF; color: #fff; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        ul { padding: 0; list-style-type: none; }
+        li { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>隨機選擇器</h1>
+        <ul id="options">
+            <!-- 選項會顯示在這裡 -->
+        </ul>
+        <input type="text" id="optionInput" placeholder="輸入一個選項">
+        <button onclick="addOption()">添加選項</button>
+        <button onclick="pickRandom()">隨機選擇</button>
+        <p id="result"></p>
+    </div>
+    <script>
+        // 預設選項
+        const options = ["選項1", "選項2", "選項3", "選項4"];
+
+        // 加載預設選項
+        window.onload = function() {
+            const optionList = document.getElementById('options');
+            options.forEach(option => {
+                const li = document.createElement('li');
+                li.textContent = option;
+                optionList.appendChild(li);
+            });
+        };
+
+        function addOption() {
+            const optionInput = document.getElementById('optionInput');
+            const option = optionInput.value.trim();
+            if (option) {
+                options.push(option);
+                const optionList = document.getElementById('options');
+                const li = document.createElement('li');
+                li.textContent = option;
+                optionList.appendChild(li);
+                optionInput.value = '';
+            }
+        }
+
+        function pickRandom() {
+            if (options.length === 0) {
+                alert('請先添加一些選項！');
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * options.length);
+            const result = options[randomIndex];
+            document.getElementById('result').textContent = '隨機選擇的結果是：' + result;
+        }
+    </script>
+</body>
+</html>
