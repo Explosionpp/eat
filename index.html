@@ -10,7 +10,9 @@
         button { padding: 10px 20px; border: none; background-color: #007BFF; color: #fff; border-radius: 5px; cursor: pointer; }
         button:hover { background-color: #0056b3; }
         ul { padding: 0; list-style-type: none; }
-        li { margin: 5px 0; }
+        li { margin: 5px 0; display: flex; justify-content: space-between; align-items: center; }
+        .edit-button, .delete-button { margin-left: 10px; cursor: pointer; }
+        .edit-button:hover, .delete-button:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -26,28 +28,55 @@
     </div>
     <script>
         // 預設選項
-        const options = ["選項1", "選項2", "選項3", "選項4"];
+        let options = ["選項1", "選項2", "選項3", "選項4"];
 
         // 加載預設選項
         window.onload = function() {
+            renderOptions();
+        };
+
+        function renderOptions() {
             const optionList = document.getElementById('options');
-            options.forEach(option => {
+            optionList.innerHTML = ''; // 清空當前列表
+            options.forEach((option, index) => {
                 const li = document.createElement('li');
                 li.textContent = option;
+                const editButton = document.createElement('span');
+                editButton.textContent = '編輯';
+                editButton.className = 'edit-button';
+                editButton.onclick = () => editOption(index);
+                const deleteButton = document.createElement('span');
+                deleteButton.textContent = '刪除';
+                deleteButton.className = 'delete-button';
+                deleteButton.onclick = () => deleteOption(index);
+                li.appendChild(editButton);
+                li.appendChild(deleteButton);
                 optionList.appendChild(li);
             });
-        };
+        }
 
         function addOption() {
             const optionInput = document.getElementById('optionInput');
             const option = optionInput.value.trim();
             if (option) {
                 options.push(option);
-                const optionList = document.getElementById('options');
-                const li = document.createElement('li');
-                li.textContent = option;
-                optionList.appendChild(li);
+                renderOptions();
                 optionInput.value = '';
+            }
+        }
+
+        function editOption(index) {
+            const newOption = prompt('編輯選項:', options[index]);
+            if (newOption !== null && newOption.trim() !== '') {
+                options[index] = newOption.trim();
+                renderOptions();
+            }
+        }
+
+        function deleteOption(index) {
+            if (confirm('確定要刪除這個選項嗎？')) {
+                options.splice(index, 1);
+                renderOptions();
             }
         }
 
