@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>隨機選擇器</title>
+    <title>吉吉的新營飼料</title>
     <style>
         body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
         #container { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
@@ -28,7 +28,7 @@
     </div>
     <script>
         // 預設選項
-        let options = ["選項1", "選項2", "選項3", "選項4"];
+        let options = JSON.parse(localStorage.getItem('options')) || ["選項1", "選項2", "選項3", "選項4"];
 
         // 加載預設選項
         window.onload = function() {
@@ -53,6 +53,7 @@
                 li.appendChild(deleteButton);
                 optionList.appendChild(li);
             });
+            localStorage.setItem('options', JSON.stringify(options)); // 更新本地儲存
         }
 
         function addOption() {
